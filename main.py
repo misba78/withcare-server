@@ -123,7 +123,7 @@ async def log_action(
     # 2. 사진의 인터넷 주소 만들기 (클라우드 주소 적용!)
     # 주의: 주석은 '#'을 써야 합니다.
     # saved_file_url = f"https://misba78.pythonanywhere.com/images/{file.filename}"
-    saved_file_url = f"https://withcare-app.onrender.com/images/{file.filename}
+    saved_file_url = f"https://withcare-app.onrender.com/images/{file.filename}"
     # 3. DB에 기록 저장
     new_log = ActionLog(
         target_id=target_id,
@@ -146,4 +146,5 @@ def get_history(db: Session = Depends(get_db)):
     logs = db.query(ActionLog).order_by(ActionLog.performed_at.desc()).all()
 
     return logs
+
 
