@@ -12,7 +12,8 @@ import shutil
 # 1. 데이터베이스 설정 (절대 경로 사용!)
 # ==========================================
 # 박사님 아이디(misba78) 경로에 맞춘 절대 경로입니다. (슬래시 4개 주의)
-SQLALCHEMY_DATABASE_URL = "sqlite:////home/misba78/mysite/withcare_v2.db"
+# 점(.) 하나가 '현재 위치'라는 뜻입니다. 슬래시 3개입니다.
+SQLALCHEMY_DATABASE_URL = "sqlite:///./withcare_v2.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
@@ -121,8 +122,8 @@ async def log_action(
 
     # 2. 사진의 인터넷 주소 만들기 (클라우드 주소 적용!)
     # 주의: 주석은 '#'을 써야 합니다.
-    saved_file_url = f"https://misba78.pythonanywhere.com/images/{file.filename}"
-
+    # saved_file_url = f"https://misba78.pythonanywhere.com/images/{file.filename}"
+    saved_file_url = f"/images/{file.filename}"
     # 3. DB에 기록 저장
     new_log = ActionLog(
         target_id=target_id,
@@ -143,4 +144,5 @@ async def log_action(
 def get_history(db: Session = Depends(get_db)):
     # 최신순으로 정렬해서 가져오기
     logs = db.query(ActionLog).order_by(ActionLog.performed_at.desc()).all()
+
     return logs
